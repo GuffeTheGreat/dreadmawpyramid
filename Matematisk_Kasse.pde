@@ -1,4 +1,6 @@
 import java.lang.Math. *;
+PImage  Background;
+
 
 //constructer vores PVectorer
 PVector [] Punkter = new PVector [6];
@@ -10,7 +12,7 @@ PVector [] RoterX = new PVector [6];
 // Laver farver variabler
 color c1 = #EFCA08;
 color c2 = #00A6A6;
-color c3 = #ffffff;
+color c3 = #964B00  ;
 
 //laver rotations variabler
 float anglez = 1;
@@ -18,10 +20,12 @@ float anglex = 1;
 
 
 void setup () {
-  
+
   //laver vores vindue
   size (400, 400);
   translate ((width/2), (height/2));
+
+  Background = loadImage("data/desert.jpg");
 
   //Fylder vores Punkter PVector array med Punkterne for vores figur
   Punkter [0] = new PVector (-1.0, -1.0, 0.0);
@@ -33,42 +37,47 @@ void setup () {
 }
 
 void draw () {
+
   background (0);
-  
+  image(Background, 0, 0);
   //roterer vores Punkter på z aksen
   for (int i = 0; i < 6; i++) {
     RoterZ [i] = RotateZ (Punkter, i, anglez);
   }
-  // roterer vores z roteret punkter på x aksen 
+  // roterer vores z roteret punkter på x aksen
   for (int i = 0; i < 6; i++) {
     RoterX [i] = RotateX (RoterZ, i, anglex);
   }
-  
+
   //udregner hvad projektions punkterne er for vores punkter
   for (int j = 0; j < 6; j++) {
     ProjekteredePunkter [j] = calcpoint (RoterX, j);
   }
 
-  translate ((width/2), (height/2));
+  translate ((width/2), (300));
 
-//tegner streger mellem vores punkter og farver dem
+  //tegner streger mellem vores punkter og farver dem
+  //connect (0, 5, ProjekteredePunkter, c3);
+  //connect (1, 5, ProjekteredePunkter, c3);
+  //connect (2, 5, ProjekteredePunkter, c3);
+  //connect (3, 5, ProjekteredePunkter, c3);
 
-  connect (0, 4, ProjekteredePunkter, c2);
-  connect (1, 4, ProjekteredePunkter, c2);
-  connect (2, 4, ProjekteredePunkter, c2);
-  connect (3, 4, ProjekteredePunkter, c2);
+  connect (0, 1, ProjekteredePunkter, c3);
+  connect (1, 2, ProjekteredePunkter, c3);
+  connect (2, 3, ProjekteredePunkter, c3);
+  connect (3, 0, ProjekteredePunkter, c3);
 
-  connect (0, 5, ProjekteredePunkter, c2);
-  connect (1, 5, ProjekteredePunkter, c2);
-  connect (2, 5, ProjekteredePunkter, c2);
-  connect (3, 5, ProjekteredePunkter, c2);
+  connect (3, 4, ProjekteredePunkter, c3);
+  connect (1, 4, ProjekteredePunkter, c3);
+  connect (2, 4, ProjekteredePunkter, c3);
+  connect (0, 4, ProjekteredePunkter, c3);
 
-  connect (0, 1, ProjekteredePunkter, c1);
-  connect (1, 2, ProjekteredePunkter, c1);
-  connect (2, 3, ProjekteredePunkter, c1);
-  connect (3, 0, ProjekteredePunkter, c1);
 
-//ændre vores z rotation hver gang den kører
+
+
+
+
+  //ændre vores z rotation hver gang den kører
   anglez = anglez + 0.03;
 }
 
@@ -77,10 +86,10 @@ void draw () {
 
 //funktion til at udregne projektions punkterne
 PVector calcpoint (PVector[] Punkter, int index) {
- 
+
   //Punktet vi vil projektere
   PVector E = Punkter [index];
-  
+
   //øjets position
   PVector P = new PVector (0, 4, 3);
   //Centrum af billed planet
@@ -131,6 +140,7 @@ void connect(int i, int j, PVector[] ProjekteredePunkter, color farver) {
   PVector a = ProjekteredePunkter[i];
   PVector b = ProjekteredePunkter[j];
   stroke(farver);
-  strokeWeight (5);
+  strokeWeight (15);
+  fill (farver);
   line(a.x*scale, a.y*scale, b.x*scale, b.y*scale);
 }
