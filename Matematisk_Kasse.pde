@@ -13,7 +13,7 @@ color c2 = #00A6A6;
 color c3 = #ffffff;
 
 //laver rotations variabler
-float anglez = 1*PI/180;
+float anglez = 1;
 float anglex = 1;
 
 
@@ -52,6 +52,7 @@ void draw () {
   translate ((width/2), (height/2));
 
 //tegner streger mellem vores punkter og farver dem
+
   connect (0, 4, ProjekteredePunkter, c2);
   connect (1, 4, ProjekteredePunkter, c2);
   connect (2, 4, ProjekteredePunkter, c2);
